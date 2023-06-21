@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// FacebookScreenShot gets a screenshot off facebook
 func (p *Puppet) FacebookScreenShot(requestURL string) error {
 	p.Webdriver.Get(FacebookLoginRoute)
 
@@ -45,7 +46,7 @@ func (p *Puppet) FacebookScreenShot(requestURL string) error {
 	return nil
 }
 
-// GetInstagram is able to get a screen shot off instagram
+// InstagramScreenShot gets a screenshot off instagram
 func (p *Puppet) InstagramScreenShot(requestURL string) error {
 	p.Webdriver.Get(InstagramLoginRoute)
 
@@ -84,4 +85,42 @@ func (p *Puppet) InstagramScreenShot(requestURL string) error {
 
 	return nil
 }
-func (p *Puppet) TwitterScreenShot() {}
+
+// TwitterScreenShot gets a screenshot off twitter
+func (p *Puppet) TwitterScreenShot(requestURL string) error {
+	p.Webdriver.Get(TwitterLoginRoute)
+
+	username, err := p.Webdriver.FindElement("name", "session[username_or_email]")
+	if err != nil {
+		return err
+	}
+	username.SendKeys("your_username")
+
+	password, err := p.Webdriver.FindElement("name", "session[password]")
+	if err != nil {
+		return err
+	}
+	password.SendKeys("your_password")
+
+	btn, err := p.Webdriver.FindElement("name", "session[remember_me]")
+	if err != nil {
+		return err
+	}
+	if err := btn.Click(); err != nil {
+		return err
+	}
+	time.Sleep(5 * time.Second)
+
+	p.Webdriver.Get(requestURL)
+
+	pngBase64, err := p.Webdriver.Screenshot()
+	if err != nil {
+		return err
+	}
+
+	fileName := "screenshot" + time.Now().String() + ".png"
+	pngData, _ := os.Create(fileName)
+	pngData.Write([]byte(pngBase64))
+
+	return nil
+}
