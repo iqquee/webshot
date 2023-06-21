@@ -13,6 +13,8 @@ var (
 	InstagramLoginRoute = "https://www.instagram.com/accounts/login"
 	// TwitterLoginRoute is the twitter login route
 	TwitterLoginRoute = "https://twitter.com/login"
+	// JijiDotNgLoginRoute is the jiji.ng login route
+	JijiDotNgLoginRoute = "https://www.jiji.ng/login"
 	// ChromeBrowser for the chrome browser
 	ChromeBrowser = "chrome"
 	// FirefoxBrowser for the firefox browser

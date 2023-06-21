@@ -124,3 +124,43 @@ func (p *Puppet) TwitterScreenShot(requestURL string) error {
 
 	return nil
 }
+
+// JijiDotNgScreenShot gets a screenshot off jiji.ng
+// Jiji is a nigerian ecommerce company
+func (p *Puppet) JijiDotNgScreenShot(requestURL string) error {
+	p.Webdriver.Get(JijiDotNgLoginRoute)
+
+	username, err := p.Webdriver.FindElement("name", "email")
+	if err != nil {
+		return err
+	}
+	username.SendKeys("your_username")
+
+	password, err := p.Webdriver.FindElement("name", "password")
+	if err != nil {
+		return err
+	}
+	password.SendKeys("your_password")
+
+	btn, err := p.Webdriver.FindElement("class name", "btn.btn-primary.btn-block")
+	if err != nil {
+		return err
+	}
+	if err := btn.Click(); err != nil {
+		return err
+	}
+	time.Sleep(5 * time.Second)
+
+	p.Webdriver.Get(requestURL)
+
+	pngBase64, err := p.Webdriver.Screenshot()
+	if err != nil {
+		return err
+	}
+
+	fileName := "screenshot" + time.Now().String() + ".png"
+	pngData, _ := os.Create(fileName)
+	pngData.Write([]byte(pngBase64))
+
+	return nil
+}
