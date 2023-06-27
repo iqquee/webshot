@@ -1,166 +1,174 @@
 package puppet
 
 import (
-	"os"
 	"time"
+
+	"github.com/tebeka/selenium"
 )
 
 // FacebookScreenShot gets a screenshot off facebook
-func (p *Puppet) FacebookScreenShot(requestURL string) error {
-	p.Webdriver.Get(FacebookLoginRoute)
-
-	username, err := p.Webdriver.FindElement("id", "email")
-	if err != nil {
-		return err
+// name can be your phone number or email address while password is your password
+func (p *Puppet) FacebookScreenShot(name, password, requestURL string) ([]byte, error) {
+	if err := p.Webdriver.Get(FacebookLoginRoute); err != nil {
+		return nil, err
 	}
-	username.SendKeys("your_username")
 
-	password, err := p.Webdriver.FindElement("id", "pass")
+	us, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "#email")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	password.SendKeys("your_password")
+	us.SendKeys(name)
 
-	btn, err := p.Webdriver.FindElement("name", "login")
+	ps, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "#pass")
 	if err != nil {
-		return err
+		return nil, err
+	}
+	ps.SendKeys(password)
+
+	btn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "button[name=\"login\"]")
+	if err != nil {
+		return nil, err
 	}
 
 	if err := btn.Click(); err != nil {
-		return err
+		return nil, err
 	}
 
 	time.Sleep(5 * time.Second)
 
-	p.Webdriver.Get(requestURL)
-
-	pngBase64, err := p.Webdriver.Screenshot()
-	if err != nil {
-		return err
+	if err := p.Webdriver.Get(requestURL); err != nil {
+		return nil, err
 	}
 
-	fileName := "screenshot" + time.Now().String() + ".png"
-	pngData, _ := os.Create(fileName)
-	pngData.Write([]byte(pngBase64))
+	time.Sleep(5 * time.Second)
 
-	return nil
+	imgByte, err := p.Webdriver.Screenshot()
+	if err != nil {
+		return nil, err
+	}
+
+	defer p.Service.Stop()
+	defer p.Webdriver.Quit()
+
+	return imgByte, nil
 }
 
 // InstagramScreenShot gets a screenshot off instagram
-func (p *Puppet) InstagramScreenShot(requestURL string) error {
-	p.Webdriver.Get(InstagramLoginRoute)
-
-	username, err := p.Webdriver.FindElement("name", "username")
-	if err != nil {
-		return err
+func (p *Puppet) InstagramScreenShot(username, password, requestURL string) ([]byte, error) {
+	if err := p.Webdriver.Get(InstagramLoginRoute); err != nil {
+		return nil, err
 	}
-	username.SendKeys("your_username")
 
-	password, err := p.Webdriver.FindElement("name", "password")
+	time.Sleep(time.Second * 5)
+
+	us, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[name=\"username\"]")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	password.SendKeys("your_password")
+	us.SendKeys(username)
 
-	btn, err := p.Webdriver.FindElement("xpath", "//button[contains(.,'Log In')]")
+	ps, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[name=\"password\"]")
 	if err != nil {
-		return err
+		return nil, err
+	}
+	ps.SendKeys(password)
+
+	btn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "button[type=\"submit\"]")
+	if err != nil {
+		return nil, err
 	}
 	if err := btn.Click(); err != nil {
-		return err
+		return nil, err
+	}
+
+	if err := p.Webdriver.Get(requestURL); err != nil {
+		return nil, err
 	}
 
 	time.Sleep(5 * time.Second)
-
-	p.Webdriver.Get(requestURL)
-
-	pngBase64, err := p.Webdriver.Screenshot()
+	imgByte, err := p.Webdriver.Screenshot()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	fileName := "screenshot" + time.Now().String() + ".png"
-	pngData, _ := os.Create(fileName)
-	pngData.Write([]byte(pngBase64))
+	defer p.Service.Stop()
+	defer p.Webdriver.Quit()
 
-	return nil
+	return imgByte, nil
 }
 
 // TwitterScreenShot gets a screenshot off twitter
-func (p *Puppet) TwitterScreenShot(requestURL string) error {
-	p.Webdriver.Get(TwitterLoginRoute)
-
-	username, err := p.Webdriver.FindElement("name", "session[username_or_email]")
-	if err != nil {
-		return err
+func (p *Puppet) TwitterScreenShot(name, password, requestURL string) ([]byte, error) {
+	if err := p.Webdriver.Get(TwitterLoginRoute); err != nil {
+		return nil, err
 	}
-	username.SendKeys("your_username")
 
-	password, err := p.Webdriver.FindElement("name", "session[password]")
+	time.Sleep(time.Second * 5)
+	loginbtn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "a[data-testid=\"login\"]")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	password.SendKeys("your_password")
+	if err := loginbtn.Click(); err != nil {
+		return nil, err
+	}
 
-	btn, err := p.Webdriver.FindElement("name", "session[remember_me]")
+	time.Sleep(5 * time.Second)
+	us, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[autocomplete=\"username\"]")
 	if err != nil {
-		return err
+		return nil, err
+	}
+	us.SendKeys(name)
+	next, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "div[role=\"button\"]")
+	if err != nil {
+		return nil, err
+	}
+	if err := next.Click(); err != nil {
+		return nil, err
+	}
+
+	time.Sleep(10 * time.Second)
+	ps, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[name=\"password\"]")
+	if err != nil {
+		return nil, err
+	}
+	ps.SendKeys(password)
+
+	btn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "div[role=\"button\"]")
+	if err != nil {
+		return nil, err
 	}
 	if err := btn.Click(); err != nil {
-		return err
+		return nil, err
 	}
+
 	time.Sleep(5 * time.Second)
 
-	p.Webdriver.Get(requestURL)
-
-	pngBase64, err := p.Webdriver.Screenshot()
-	if err != nil {
-		return err
+	if err := p.Webdriver.Get(requestURL); err != nil {
+		return nil, err
 	}
 
-	fileName := "screenshot" + time.Now().String() + ".png"
-	pngData, _ := os.Create(fileName)
-	pngData.Write([]byte(pngBase64))
+	imgByte, err := p.Webdriver.Screenshot()
+	if err != nil {
+		return nil, err
+	}
 
-	return nil
+	defer p.Service.Stop()
+	defer p.Webdriver.Quit()
+
+	return imgByte, nil
 }
 
-// JijiDotNgScreenShot gets a screenshot off jiji.ng
-// Jiji is a nigerian ecommerce company
-func (p *Puppet) JijiDotNgScreenShot(requestURL string) error {
-	p.Webdriver.Get(JijiDotNgLoginRoute)
-
-	username, err := p.Webdriver.FindElement("name", "email")
-	if err != nil {
-		return err
-	}
-	username.SendKeys("your_username")
-
-	password, err := p.Webdriver.FindElement("name", "password")
-	if err != nil {
-		return err
-	}
-	password.SendKeys("your_password")
-
-	btn, err := p.Webdriver.FindElement("class name", "btn.btn-primary.btn-block")
-	if err != nil {
-		return err
-	}
-	if err := btn.Click(); err != nil {
-		return err
-	}
-	time.Sleep(5 * time.Second)
-
+// DefaultScreenShot is the default screenshotter which can screesnhot of webpages that does not require any form of authentication
+func (p *Puppet) DefaultScreenShot(requestURL string) ([]byte, error) {
 	p.Webdriver.Get(requestURL)
 
-	pngBase64, err := p.Webdriver.Screenshot()
+	imgByte, err := p.Webdriver.Screenshot()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	fileName := "screenshot" + time.Now().String() + ".png"
-	pngData, _ := os.Create(fileName)
-	pngData.Write([]byte(pngBase64))
+	defer p.Service.Stop()
+	defer p.Webdriver.Quit()
 
-	return nil
+	return imgByte, nil
 }

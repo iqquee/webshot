@@ -10,9 +10,9 @@ var (
 	// FacebookLoginRoute is the facebook login route
 	FacebookLoginRoute = "https://web.facebook.com/login"
 	// InstagramLoginRoute is the instagram login route
-	InstagramLoginRoute = "https://www.instagram.com/accounts/login"
+	InstagramLoginRoute = "https://instagram.com/"
 	// TwitterLoginRoute is the twitter login route
-	TwitterLoginRoute = "https://twitter.com/login"
+	TwitterLoginRoute = "https://twitter.com/"
 	// JijiDotNgLoginRoute is the jiji.ng login route
 	JijiDotNgLoginRoute = "https://www.jiji.ng/login"
 	// ChromeBrowser for the chrome browser
@@ -20,7 +20,7 @@ var (
 	// FirefoxBrowser for the firefox browser
 	FirefoxBrowser = "firefox"
 	// BrowserError is the error returned when the browser type entered by the user is neither chrome or firefox
-	BrowserError = errors.New("the supported browsers are chrome and firefox")
+	ErrBrowser = errors.New("the supported browsers are chrome and firefox")
 )
 
 type (
@@ -42,5 +42,7 @@ type (
 	Puppet struct {
 		// webdriver is the selenium we driver
 		Webdriver selenium.WebDriver
+		// Service is the selenuim service
+		Service *selenium.Service
 	}
 )
