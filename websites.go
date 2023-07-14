@@ -9,34 +9,41 @@ import (
 // FacebookScreenShot gets a screenshot off facebook
 // name can be your phone number or email address while password is your password
 func (p *Puppet) FacebookScreenShot(name, password, requestURL string) ([]byte, error) {
-	if err := p.Webdriver.Get(FacebookLoginRoute); err != nil {
+	// if err := p.Webdriver.Get(FacebookLoginRoute); err != nil {
+	// 	return nil, err
+	// }
+
+	if err := p.Webdriver.Get(requestURL); err != nil {
 		return nil, err
 	}
+	time.Sleep(5 * time.Second)
+	// login, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "div[role=\"button\"]")
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	us, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "#email")
+	// if err := login.Click(); err != nil {
+	// 	return nil, err
+	// }
+
+	us, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[name=\"email\"]")
 	if err != nil {
 		return nil, err
 	}
 	us.SendKeys(name)
 
-	ps, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "#pass")
+	ps, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "input[name=\"pass\"]")
 	if err != nil {
 		return nil, err
 	}
 	ps.SendKeys(password)
 
-	btn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "button[name=\"login\"]")
+	btn, err := p.Webdriver.FindElement(selenium.ByCSSSelector, "div[role=\"button\"]")
 	if err != nil {
 		return nil, err
 	}
 
 	if err := btn.Click(); err != nil {
-		return nil, err
-	}
-
-	time.Sleep(5 * time.Second)
-
-	if err := p.Webdriver.Get(requestURL); err != nil {
 		return nil, err
 	}
 

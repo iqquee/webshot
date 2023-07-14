@@ -1,17 +1,19 @@
 package puppet
 
-// import gocr "github.com/otiai10/gosseract"
+import (
+	"os/exec"
+)
 
-// // ImageProcessing does the optical character recognition(OCR)
-// func ImageProcessing(filePath string) (string, error) {
-// 	client := gocr.NewClient()
-// 	defer client.Close()
+// ImageProcessing does the optical character recognition(OCR)
+func ImageProcessing(filePath, saveAs string) error {
+	cmd := "tesseract"
 
-// 	client.SetImage(filePath)
-// 	text, err := client.Text()
-// 	if err != nil {
-// 		return "", err
-// 	}
+	args := []string{filePath, saveAs}
 
-// 	return text, nil
-// }
+	_, err := exec.Command(cmd, args...).Output()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
