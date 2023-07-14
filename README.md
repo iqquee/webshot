@@ -4,9 +4,9 @@ webshot is a website screenshotting library in golang
 # Get Started
 In other to use this package, you need to first install `tesseract` on your machine and then download GekoDriver for your os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
 
-### NOTE: The broswer used in this package by default is firefox. Kindly install firefox if you don't have it on your machine already.
+### NOTE: The browser used in this package by default is firefox. Kindly install firefox if you don't have it on your machine already.
 # Installation
-This package can in installed using the go command below.
+This package can be installed by using the go command below.
 ```sh
 go get github.com/iqquee/webshot
 ```
@@ -31,7 +31,7 @@ import (
 )
 
 func main() {
-	c := webshot.NewConfig{
+	config := webshot.NewConfig{
 		Address:     "http://localhost",
 		Port:        4444, // you can change accordingly to which ever port you wish
 		BrowserName: "firefox",
@@ -39,7 +39,7 @@ func main() {
 		DriverPath:  "", // your gekodriver path goes in here
 	}
 
-	driver, err := webshot.NewWebshot(c)
+	driver, err := webshot.NewWebshot(config)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -47,7 +47,7 @@ func main() {
 
 	url := "https://google.com"
 
-	byteImage, err := driver.DefaultScreenShot(url)
+	byteImage, err := driver.ScreenShot(url)
 	if err != nil {
 		fmt.Println(err)
 		return
