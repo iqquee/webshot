@@ -2,7 +2,7 @@
 webshot is a website screenshotting library in golang
 
 # Get Started
-In other to use this package, you need to first install `tesseract` on your machine. Download GekoDriver for you os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
+In other to use this package, you need to first install `tesseract` on your machine and then download GekoDriver for your os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
 
 ### NOTE: The broswer used in this package by default is firefox. Kindly install firefox if you don't have it on your machine already.
 # Installation
