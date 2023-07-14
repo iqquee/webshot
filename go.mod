@@ -1,4 +1,4 @@
-module github.com/iqquee/puppet
+module github.com/iqquee/webshot
 
 go 1.20
 

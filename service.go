@@ -1,4 +1,4 @@
-package puppet
+package webshot
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 // NewPuppet sets up a new browser with the config provided
-func NewPuppet(c NewConfig) (*Puppet, error) {
+func NewWebshot(c NewConfig) (*Webshot, error) {
 	// var webdriver selenium.WebDriver
 
 	opts := []selenium.ServiceOption{
@@ -32,10 +32,8 @@ func NewPuppet(c NewConfig) (*Puppet, error) {
 		return nil, err
 	}
 
-	wd.MaximizeWindow("")
-
 	fmt.Printf("The service ran successfully\n")
-	return &Puppet{
+	return &Webshot{
 		Webdriver: wd,
 		Service:   service,
 	}, nil

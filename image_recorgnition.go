@@ -1,10 +1,14 @@
-package puppet
+package webshot
 
 import (
 	"os/exec"
 )
 
-// ImageProcessing does the optical character recognition(OCR)
+/*
+ImageProcessing does the optical character recognition(OCR)
+
+This method takes in two parameters which are: filePath and the name the processed image is to be saved as.
+*/
 func ImageProcessing(filePath, saveAs string) error {
 	cmd := "tesseract"
 
