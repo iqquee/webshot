@@ -2,7 +2,7 @@ package webshot
 
 import "time"
 
-// ScreenShot is the default screenshotter which can take the screesnhot of webpages
+// ScreenShot is the default screenshotter which can take the screenshot of webpages
 func (p *Webshot) ScreenShot(requestURL string) ([]byte, error) {
 	p.Webdriver.Get(requestURL)
 

@@ -18,7 +18,7 @@ $ touch example.go
 ```
 
 # ScreenShot
-ScreenShot is the default screenshotter which can take the screesnhot of webpages
+ScreenShot is the default screenshotter which can take the screenshot of webpages
 
 ```go
 package main
