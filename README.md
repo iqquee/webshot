@@ -17,8 +17,8 @@ $ touch example.go
 # open the just created example.go file in the text editor of your choice
 ```
 
-# ScreenShot
-ScreenShot is the default screenshotter which can take the screenshot of webpages
+# Screenshot
+Screenshot is the default screenshotter which can take the screenshot of webpages
 
 ```go
 package main
@@ -47,7 +47,7 @@ func main() {
 
 	url := "https://google.com"
 
-	byteImage, err := driver.ScreenShot(url)
+	byteImage, err := driver.Screenshot(url)
 	if err != nil {
 		fmt.Println(err)
 		return
