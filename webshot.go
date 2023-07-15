@@ -30,7 +30,7 @@ type (
 		BrowserName string
 	}
 
-	// Puppet is the struct for the webdriver
+	// Webshot is the struct for the webdriver
 	Webshot struct {
 		// webdriver is the selenium we driver
 		Webdriver selenium.WebDriver

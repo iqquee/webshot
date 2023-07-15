@@ -34,7 +34,7 @@ func main() {
 	config := webshot.NewConfig{
 		Address:     "http://localhost",
 		Port:        4444, // you can change accordingly to which ever port you wish
-		BrowserName: "firefox",
+		BrowserName: webshot.FirefoxBrowser,
 		DebugMode:   true, // set to true if you want to get the logs
 		DriverPath:  "", // your gekodriver path goes in here
 	}

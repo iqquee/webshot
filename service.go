@@ -7,7 +7,7 @@ import (
 	"github.com/tebeka/selenium"
 )
 
-// NewPuppet sets up a new browser with the config provided
+// NewWebshot sets up a new browser with the config provided
 func NewWebshot(c NewConfig) (*Webshot, error) {
 	// var webdriver selenium.WebDriver
 
