@@ -38,3 +38,8 @@ func NewWebshot(c NewConfig) (*Webshot, error) {
 		Service:   service,
 	}, nil
 }
+
+// Extend allow you to use use all of the functionalities provided by selenium
+func (w *Webshot) Extend() selenium.WebDriver {
+	return w.Webdriver
+}

@@ -2,7 +2,7 @@
 webshot is a website screenshotting library in golang
 
 # Get Started
-In other to use this package, you need to first install `tesseract` on your machine and then download GekoDriver for your os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
+In other to use this package, you need to first install `tesseract` on your machine and then download GeckoDriver for your os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
 
 ### NOTE: The browser used in this package by default is firefox. Kindly install firefox if you don't have it on your machine already.
 # Installation
@@ -82,5 +82,45 @@ func main() {
 		fmt.Println("Image processing err: \n", err)
 		return
 	}
+}
+```
+
+# Extend
+Extend allow you to use use all of the functionalities provided by selenium
+
+
+You can use the Extend() to pretty much do whatever you wish as long as it's a functionality selenium supports. 
+```go
+package main
+
+import (
+	"fmt"
+
+	webshot "github.com/rebackfinance/webshot-ocr"
+)
+
+func main() {
+    config := webshot.NewConfig{
+		Address:     "http://localhost",
+		Port:        4444, // you can change accordingly to which ever port you wish
+		BrowserName: webshot.FirefoxBrowser,
+		DebugMode:   true, // set to true if you want to get the logs
+		DriverPath:  "", // your gekodriver path goes in here
+	}
+
+	driver, err := webshot.NewWebshot(config)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	service := driver.Extend()
+	imgBytes, err := service.Screenshot()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(imgBytes)
 }
 ```
