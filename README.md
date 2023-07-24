@@ -96,7 +96,7 @@ package main
 import (
 	"fmt"
 
-	webshot "github.com/rebackfinance/webshot-ocr"
+	webshot "github.com/iqquee/webshot"
 )
 
 func main() {
