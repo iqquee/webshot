@@ -1,5 +1,5 @@
 # webshot
-webshot is a website screenshotting library in golang
+webshot is a free website screenshotting library in golang
 
 # Get Started
 In other to use this package, you need to first install `tesseract` on your machine and then download GeckoDriver for your os from [https://github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases).
